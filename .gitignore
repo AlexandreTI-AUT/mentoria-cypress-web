@@ -1,0 +1,65 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100/
+.Trashes/
+.DocumentRevisions-V100/
+.fseventsd/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Cypress artifacts
+cypress/screenshots/
+cypress/videos/
+cypress/reports/
+cypress/test-results/
+.cypress/
+
+# Test coverage / reports
+coverage/
+lcov-report/
+coverage-final.json
+mochawesome-report/
+test-results/
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+.env.test
+.env.production
+
+# Logs
+logs/
+*.log
+
+# Build / temp
+dist/
+build/
+.tmp/
+temp/
+out/
+
+# IDE / editor files
+.vscode/
+.idea/
+*.iml
+*.sublime-workspace
+*.sublime-project
+
+# OS thumbnails / Windows
+Thumbs.db
+ehthumbs.db
+
+# Keys / certs / sensitive
+*.pem
+*.key
+*.p12
+*.jks
