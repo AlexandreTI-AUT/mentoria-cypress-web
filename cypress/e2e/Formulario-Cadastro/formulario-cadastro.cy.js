@@ -5,7 +5,7 @@ describe("Formulário de Cadastro", () => {
     cy.visit("https://alexandreti-aut.github.io/formulario-cadastro/");
   });
 
-  it("Deve preencher o formulário de cadastro com sucesso", () => {
+  it.only("Deve preencher o formulário de cadastro com sucesso", () => {
     cy.realizarCadastro();
     cy.enviarFormulario();
     cy.validarSucesso();
