@@ -2,27 +2,40 @@ import { faker } from '@faker-js/faker';
 
 Cypress.Commands.add('realizarCadastro', (dados = {}) => {
 
-    const usuario = {
-        nome: faker.name.fullName(),
-        email: faker.internet.email().toLowerCase(),
-        telefone: faker.phone.number('###########'),
-        nascimento: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }).toLocaleDateString('pt-BR'),
-        genero: faker.helpers.arrayElement(['Masculino', 'Feminino', 'Outro']),
-        comentario: faker.lorem.sentence(),
-        senha: faker.internet.password(12, true),
-        termos: true,
-        ...dados
-    };
+  const usuario = {
+    nome: faker.person.fullName(),
+    email: faker.internet.email().toLowerCase(),
+    comentario: faker.lorem.sentence(),
+    senha: faker.internet.password(12),
+    termos: true,
+    ...dados
+  };
 
-    cy.get('[data-testid="input-nome"]').type(usuario.nome);
-    cy.get('[data-testid="input-email"]').type(usuario.email);
-    cy.get('[data-testid="input-telefone"]').type(usuario.telefone);
-    cy.get('[data-testid="input-nascimento"]').type(usuario.nascimento);
-    cy.get(`.genero-opcoes > :nth-child(${['Masculino', 'Feminino', 'Outro'].indexOf(usuario.genero) + 1})`).click();
-    cy.get('[data-testid="input-comentario"]').type(usuario.comentario);
-    cy.get('[data-testid="input-senha"]').type(usuario.senha);
-    if (usuario.termos) {
-        cy.get('[name="termos"]').click();
+  if (usuario.nome) cy.get('[data-testid="input-nome"]').type(usuario.nome);
+  if (usuario.email) cy.get('[data-testid="input-email"]').type(usuario.email);
+  if (usuario.comentario) cy.get('[data-testid="input-comentario"]').type(usuario.comentario);
+  if (usuario.senha) cy.get('[data-testid="input-senha"]').type(usuario.senha);
+  if (usuario.termos) cy.get('[name="termos"]').click();
 
-    }
 });
+
+Cypress.Commands.add('enviarFormulario', () => {
+  cy.get('[data-testid="btn-submit"]').click();
+});
+
+Cypress.Commands.add('validarSucesso', () => {
+  cy.get('.success-message')
+    .should('be.visible')
+    .and('contain', 'Cadastro realizado com sucesso');
+
+
+});Cypress.Commands.add('limparFormulario', () => {
+  cy.get('[data-testid="btn-reset"]').click();
+});
+
+Cypress.Commands.add('validarErro', (mensagem) => {
+  cy.get('.error-message')
+    .should('be.visible')
+    .and('contain', mensagem);
+});
+
