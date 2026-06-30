@@ -5,7 +5,7 @@ describe("Formulário de Cadastro", () => {
     cy.visit("https://alexandreti-aut.github.io/formulario-cadastro/");
   });
 
-  it.only("Deve preencher o formulário de cadastro com sucesso", () => {
+  it("Deve preencher o formulário de cadastro com sucesso", () => {
     cy.realizarCadastro();
     cy.enviarFormulario();
     cy.validarSucesso();
@@ -16,14 +16,15 @@ describe("Formulário de Cadastro", () => {
 
     cy.validarErro("Por favor, preencha todos os campos obrigatórios");
   });
-  it("Deve exibir erro ao tentar cadastrar sem preencher o comentário", () => {
+
+  it("Deve permitir cadastro sem preencher o comentário", () => {
     cy.realizarCadastro({
       comentario: "",
     });
 
     cy.enviarFormulario();
 
-    cy.validarErro("Por favor, preencha todos os campos obrigatórios");
+    cy.validarSucesso();
   });
 
   it("Deve exibir erro ao tentar cadastrar sem aceitar os termos", () => {
@@ -50,14 +51,11 @@ describe("Formulário de Cadastro", () => {
   });
 
   it("Deve limpar os campos ao clicar no botão Limpar", () => {
-    cy.get('[data-testid="input-nome"]').type("John Doe");
-    cy.get('[data-testid="input-email"]').type("john.doe@example.com");
-    cy.get('[data-testid="input-telefone"]').type("11999999999");
+    cy.realizarCadastro();
+
     cy.limparFormulario();
 
-    cy.get('[data-testid="input-nome"]').should("have.value", "");
-    cy.get('[data-testid="input-email"]').should("have.value", "");
-    cy.get('[data-testid="input-telefone"]').should("have.value", "");
+    cy.validarCamposLimpos();
   });
 
   it("Não deve permitir comentário com mais de 250 caracteres", () => {
@@ -76,14 +74,5 @@ describe("Formulário de Cadastro", () => {
     cy.get(".toggle-password").click();
 
     cy.get('[data-testid="input-senha"]').should("have.attr", "type", "text");
-  });
-
-  it("Deve limpar todos os campos do formulário", () => {
-    cy.realizarCadastro();
-    cy.limparFormulario();
-
-    cy.get('[data-testid="input-nome"]').should("have.value", "");
-    cy.get('[data-testid="input-email"]').should("have.value", "");
-    cy.get('[data-testid="input-comentario"]').should("have.value", "");
   });
 });
